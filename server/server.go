@@ -20,7 +20,7 @@ func NewServer(host string, port int) *Server {
 }
 
 func (o *Server) Start() error {
-	tmp := fmt.Sprintf("%s:%d", o.host, strconv.Itoa(o.port))
+	tmp := fmt.Sprintf("%s:%s", o.host, strconv.Itoa(o.port))
 
 	log.Println("Server started and listen:", tmp)
 	_, err := net.Listen("tcp", tmp)
