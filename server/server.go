@@ -3,8 +3,7 @@ package nlike
 import (
 	"fmt"
 	"log"
-	"net"
-	"strconv"
+	"net/http"
 )
 
 type Server struct {
@@ -20,14 +19,10 @@ func NewServer(host string, port int) *Server {
 }
 
 func (o *Server) Start() error {
-	tmp := fmt.Sprintf("%s:%s", o.host, strconv.Itoa(o.port))
+	tmp := fmt.Sprintf("%s:%d", o.host, o.port)
 
 	log.Println("Server started and listen:", tmp)
-	_, err := net.Listen("tcp", tmp)
-	if err != nil {
-		return err
-	}
-	return nil
+	return http.ListenAndServe(tmp, nil)
 }
 
 func (o *Server) Stop() {

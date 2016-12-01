@@ -34,11 +34,13 @@ func configureSignals() (done chan bool) {
 func main() {
 	defer log.Println("End program")
 	host, port := getFlags()
-	exitProgramChannel := configureSignals()
+	exitChanel := configureSignals()
 
 	server := nlike.NewServer(*host, *port)
-	server.Start()
+	if err := server.Start(); err != nil {
+		log.Println(err)
+		exitChanel <- true
+	}
 	defer server.Stop()
-
-	<-exitProgramChannel
+	<-exitChanel
 }
