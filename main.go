@@ -25,7 +25,7 @@ func configureSignals() (done chan bool) {
 
 	go func() {
 		sig := <-sigs
-		log.Println("Signal catch:", sig)
+		defer log.Println("Signal catch:", sig)
 		done <- true
 	}()
 	return
@@ -34,13 +34,10 @@ func configureSignals() (done chan bool) {
 func main() {
 	defer log.Println("End program")
 	host, port := getFlags()
-	exitChanel := configureSignals()
+	done := configureSignals()
 
 	server := nlike.NewServer(*host, *port)
-	if err := server.Start(); err != nil {
-		log.Println(err)
-		exitChanel <- true
-	}
+	server.Start()
 	defer server.Stop()
-	<-exitChanel
+	<-done
 }

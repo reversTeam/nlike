@@ -18,11 +18,16 @@ func NewServer(host string, port int) *Server {
 	}
 }
 
-func (o *Server) Start() error {
+func (o *Server) Start() {
 	tmp := fmt.Sprintf("%s:%d", o.host, o.port)
 
 	log.Println("Server started and listen:", tmp)
-	return http.ListenAndServe(tmp, nil)
+	go func() {
+		defer o.Stop()
+		if err := http.ListenAndServe(tmp, nil); err != nil {
+			log.Panic("Server ERROR[500]:", err)
+		}
+	}()
 }
 
 func (o *Server) Stop() {
