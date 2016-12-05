@@ -1,17 +1,17 @@
 package topic
 
 import (
-	"github.com/reversTeam/nlike/server"
+	"github.com/reversTeam/nlike/kernel"
 	"net/http"
 )
 
 type Topic struct {
-	server.Controller
+	kernel.Controller
 }
 
 func NewTopic() *Topic {
 	topic := &Topic{
-		server.Controller{},
+		kernel.Controller{},
 	}
 	topic.AddRoute("^/topics$", topic.List)
 	topic.AddRoute("^/topics/create$", topic.Create)

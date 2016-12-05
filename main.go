@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/reversTeam/nlike/server"
+	"github.com/reversTeam/nlike/kernel"
 	"github.com/reversTeam/nlike/topic"
 	"log"
 
@@ -38,7 +38,7 @@ func main() {
 	host, port := getFlags()
 	done := configureSignals()
 
-	srv := server.NewServer(*host, *port)
+	srv := kernel.NewServer(*host, *port)
 	tpc := topic.NewTopic()
 	tpc.Init(srv.GetRouter())
 
