@@ -7,9 +7,10 @@ import (
 )
 
 type Server struct {
-	host   string
-	port   int
-	router *Router
+	host     string
+	port     int
+	router   *Router
+	packages []*Package
 }
 
 type config struct {
@@ -18,10 +19,10 @@ type config struct {
 
 func NewServer(host string, port int) *Server {
 	return &Server{
-		host: host,
-		port: port,
-		// packages: make([]*Package, 0),
-		router: NewRouter(),
+		host:     host,
+		port:     port,
+		packages: make([]*Package, 0),
+		router:   NewRouter(),
 	}
 }
 
@@ -42,6 +43,12 @@ func (o *Server) Stop() {
 	// Execute action before closing the server
 }
 
-func (o *Server) GetRouter() *Router {
-	return o.router
+func (o *Server) AddPackage(pkg *Package) {
+	o.packages = append(o.packages, pkg)
+}
+
+func (o *Server) InitPackages() {
+	for _, pkg := range o.packages {
+		pkg.Init(o.router)
+	}
 }

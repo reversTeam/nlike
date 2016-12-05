@@ -39,8 +39,14 @@ func main() {
 	done := configureSignals()
 
 	srv := kernel.NewServer(*host, *port)
-	tpc := topic.NewTopic()
-	tpc.Init(srv.GetRouter())
+
+	topicPkg := kernel.NewPackage("Topic")
+	topicBundle := kernel.NewBundle("TopicBundle")
+	topicController := topic.NewTopic()
+	topicBundle.AddController(topicController)
+	topicPkg.AddBundle(topicBundle)
+	srv.AddPackage(topicPkg)
+	srv.InitPackages()
 
 	srv.Start()
 	defer srv.Stop()

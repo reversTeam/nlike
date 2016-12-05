@@ -6,24 +6,36 @@ import (
 	"regexp"
 )
 
+type ControllerInterface interface {
+	AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) error
+	Init(router *Router)
+	initRoutes(router *Router)
+	GetRoutes() []*Route
+}
+
 type Controller struct {
 	Routes []*Route
 }
 
-func NewContoller() *Controller {
+func NewContoller() ControllerInterface {
 	controller := &Controller{}
 	controller.Routes = make([]*Route, 0)
 
 	return controller
 }
 
-func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) {
+func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) error {
 	defer log.Println("Add route:", pattern)
 
-	reg, _ := regexp.Compile(pattern)
+	reg, err := regexp.Compile(pattern)
+	if err != nil {
+		return err
+	}
 	handler := http.HandlerFunc(fn)
 	route := NewRoute(reg, handler)
 	o.Routes = append(o.Routes, route)
+
+	return nil
 
 }
 
