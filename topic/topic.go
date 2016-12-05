@@ -13,11 +13,11 @@ func NewTopic() *Topic {
 	topic := &Topic{
 		server.Controller{},
 	}
-	topic.AddRoute("^/topics", topic.List)
-	topic.AddRoute("^/topics/create", topic.Create)
+	topic.AddRoute("^/topics$", topic.List)
+	topic.AddRoute("^/topics/create$", topic.Create)
 	topic.AddRoute("^/topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$", topic.View)
-	topic.AddRoute("^/topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/update", topic.Update)
-	topic.AddRoute("^/topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/delete", topic.Delete)
+	topic.AddRoute("^/topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/update$", topic.Update)
+	topic.AddRoute("^/topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/delete$", topic.Delete)
 
 	return topic
 }

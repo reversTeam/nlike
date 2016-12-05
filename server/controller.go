@@ -17,10 +17,6 @@ func NewContoller() *Controller {
 	return controller
 }
 
-func (o *Controller) getRoutes() []*Route {
-	return o.Routes
-}
-
 func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) {
 	defer log.Println("Add route:", pattern)
 
@@ -29,4 +25,18 @@ func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http
 	route := NewRoute(reg, handler)
 	o.Routes = append(o.Routes, route)
 
+}
+
+func (o *Controller) Init(router *Router) {
+	o.initRoutes(router)
+}
+
+func (o *Controller) initRoutes(router *Router) {
+	for _, route := range o.Routes {
+		router.AddRoute(route)
+	}
+}
+
+func (o *Controller) GetRoutes() []*Route {
+	return o.Routes
 }

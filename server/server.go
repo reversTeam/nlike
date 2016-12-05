@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"regexp"
 )
 
 type Server struct {
@@ -19,8 +18,9 @@ type config struct {
 
 func NewServer(host string, port int) *Server {
 	return &Server{
-		host:   host,
-		port:   port,
+		host: host,
+		port: port,
+		// packages: make([]*Package, 0),
 		router: NewRouter(),
 	}
 }
@@ -42,9 +42,6 @@ func (o *Server) Stop() {
 	// Execute action before closing the server
 }
 
-func (o *Server) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) {
-	defer log.Println("Add route:", pattern)
-
-	reg, _ := regexp.Compile(pattern)
-	o.router.HandleFunc(reg, fn)
+func (o *Server) GetRouter() *Router {
+	return o.router
 }

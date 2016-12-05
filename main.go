@@ -5,7 +5,6 @@ import (
 	"github.com/reversTeam/nlike/server"
 	"github.com/reversTeam/nlike/topic"
 	"log"
-	"net/http"
 
 	"os"
 	"os/signal"
@@ -34,26 +33,14 @@ func configureSignals() (done chan bool) {
 	return
 }
 
-func handler(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("This is an example server.\n"))
-}
-
-// func addTopicRoute(server *nlike.Server) {
-// 	server.AddRoute("/topics", handler)
-// 	server.AddRoute("/topics/create", handler)
-// 	server.AddRoute("topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$", handler)
-// 	server.AddRoute("topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/update$", handler)
-// 	server.AddRoute("topics/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/delete$", handler)
-// }
-
 func main() {
 	defer log.Println("End program")
 	host, port := getFlags()
 	done := configureSignals()
 
 	srv := server.NewServer(*host, *port)
-	topic.NewTopic()
+	tpc := topic.NewTopic()
+	tpc.Init(srv.GetRouter())
 
 	srv.Start()
 	defer srv.Stop()

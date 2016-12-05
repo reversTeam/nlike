@@ -23,14 +23,18 @@ func NewRouter() *Router {
 	}
 }
 
+func (o *Router) AddRoute(route *Route) {
+	o.Routes = append(o.Routes, route)
+}
+
 func (o *Router) Handler(pattern *regexp.Regexp, handler http.Handler) {
-	o.Routes = append(o.Routes, NewRoute(pattern, handler))
+	o.AddRoute(NewRoute(pattern, handler))
 }
 
 func (o *Router) HandleFunc(pattern *regexp.Regexp, fn func(http.ResponseWriter, *http.Request)) {
 	handler := http.HandlerFunc(fn)
 	route := NewRoute(pattern, handler)
-	o.Routes = append(o.Routes, route)
+	o.AddRoute(route)
 }
 
 func (o *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
