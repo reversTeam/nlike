@@ -52,12 +52,11 @@ func main() {
 	host, port := getFlags()
 	done := configureSignals()
 
-	server := nlike.NewServer(*host, *port)
+	srv := server.NewServer(*host, *port)
+	topic.NewTopic()
 
-	topic := nlike.NewTopic()
-
-	server.Start()
-	defer server.Stop()
+	srv.Start()
+	defer srv.Stop()
 
 	<-done
 }

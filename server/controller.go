@@ -1,8 +1,8 @@
-package nlike
+package server
 
 import (
+	"log"
 	"net/http"
-	"nlike/route"
 	"regexp"
 )
 
@@ -12,10 +12,12 @@ type Controller struct {
 
 func NewContoller() *Controller {
 	controller := &Controller{}
-	controller.Routes = make(*Route, 0)
+	controller.Routes = make([]*Route, 0)
+
+	return controller
 }
 
-func (o *Controller) getRoutes(o *Controller) {
+func (o *Controller) getRoutes() []*Route {
 	return o.Routes
 }
 
@@ -24,7 +26,7 @@ func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http
 
 	reg, _ := regexp.Compile(pattern)
 	handler := http.HandlerFunc(fn)
-	route := NewRoute(pattern, handler)
+	route := NewRoute(reg, handler)
 	o.Routes = append(o.Routes, route)
 
 }

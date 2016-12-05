@@ -1,4 +1,4 @@
-package nlike
+package server
 
 import (
 	"net/http"
