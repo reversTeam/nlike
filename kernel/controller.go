@@ -25,7 +25,7 @@ func NewContoller() ControllerInterface {
 }
 
 func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) error {
-	defer log.Println("Add route:", pattern)
+	defer log.Printf("[CONTROLLER] add route => %s", pattern)
 
 	reg, err := regexp.Compile(pattern)
 	if err != nil {

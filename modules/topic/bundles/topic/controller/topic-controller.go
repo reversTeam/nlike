@@ -1,16 +1,16 @@
-package topic
+package controller
 
 import (
 	"github.com/reversTeam/nlike/kernel"
 	"net/http"
 )
 
-type Topic struct {
+type TopicController struct {
 	kernel.Controller
 }
 
-func NewTopic() kernel.ControllerInterface {
-	topic := &Topic{
+func NewController() kernel.ControllerInterface {
+	topic := &TopicController{
 		kernel.Controller{},
 	}
 	topic.AddRoute("^/topics$", topic.List)
@@ -22,27 +22,27 @@ func NewTopic() kernel.ControllerInterface {
 	return topic
 }
 
-func (o *Topic) List(w http.ResponseWriter, req *http.Request) {
+func (o *TopicController) List(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("Method of list all topics HTTP\n"))
 }
 
-func (o *Topic) Create(w http.ResponseWriter, req *http.Request) {
+func (o *TopicController) Create(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("Method of view one topic HTTP\n"))
 }
 
-func (o *Topic) View(w http.ResponseWriter, req *http.Request) {
+func (o *TopicController) View(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("Method of view one topic HTTP\n"))
 }
 
-func (o *Topic) Update(w http.ResponseWriter, req *http.Request) {
+func (o *TopicController) Update(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("Method of update one topic HTTP\n"))
 }
 
-func (o *Topic) Delete(w http.ResponseWriter, req *http.Request) {
+func (o *TopicController) Delete(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("Method of delete one topic HTTP\n"))
 }
