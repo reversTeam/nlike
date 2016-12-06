@@ -11,7 +11,7 @@ type TopicController struct {
 
 func NewController() *TopicController {
 	topic := &TopicController{
-		kernel.Controller{},
+		*kernel.NewController(),
 	}
 	topic.AddRoute("^/topics$", topic.List)
 	topic.AddRoute("^/topics/create$", topic.Create)
