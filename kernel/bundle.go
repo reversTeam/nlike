@@ -14,7 +14,7 @@ type Bundle struct {
 	controllers []ControllerInterface
 }
 
-func NewBundle(name string) BundleInterface {
+func NewBundle(name string) *Bundle {
 	bundle := &Bundle{
 		name:        name,
 		controllers: make([]ControllerInterface, 0),
@@ -40,7 +40,7 @@ func (o *Bundle) AddController(controller ControllerInterface) {
 }
 
 func (o *Bundle) BootstrapEvent() {
-	log.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	defer log.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 }
 
 func (o *Bundle) GetName() string {

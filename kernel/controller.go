@@ -17,7 +17,7 @@ type Controller struct {
 	Routes []*Route
 }
 
-func NewContoller() ControllerInterface {
+func NewContoller() *Controller {
 	controller := &Controller{}
 	controller.Routes = make([]*Route, 0)
 

@@ -9,7 +9,7 @@ type TopicController struct {
 	kernel.Controller
 }
 
-func NewController() kernel.ControllerInterface {
+func NewController() *TopicController {
 	topic := &TopicController{
 		kernel.Controller{},
 	}
