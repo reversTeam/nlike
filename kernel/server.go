@@ -10,7 +10,7 @@ type Server struct {
 	host     string
 	port     int
 	router   *Router
-	packages []*Package
+	packages []PackageInterface
 }
 
 type config struct {
@@ -21,7 +21,7 @@ func NewServer(host string, port int) *Server {
 	return &Server{
 		host:     host,
 		port:     port,
-		packages: make([]*Package, 0),
+		packages: make([]PackageInterface, 0),
 		router:   NewRouter(),
 	}
 }
@@ -43,12 +43,13 @@ func (o *Server) Stop() {
 	// Execute action before closing the server
 }
 
-func (o *Server) AddPackage(pkg *Package) {
+func (o *Server) AddPackage(pkg PackageInterface) {
 	o.packages = append(o.packages, pkg)
 }
 
 func (o *Server) InitPackages() {
 	for _, pkg := range o.packages {
+		pkg.BootstrapEvent()
 		pkg.Init(o.router)
 	}
 }

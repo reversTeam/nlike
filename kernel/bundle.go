@@ -1,7 +1,5 @@
 package kernel
 
-import "log"
-
 type BundleInterface interface {
 	Init(router *Router)
 	AddController(controller ControllerInterface)
@@ -23,8 +21,6 @@ func NewBundle(name string) *Bundle {
 }
 
 func (o *Bundle) Init(router *Router) {
-	defer log.Printf("[BUNDLE]: %s initialized", o.name)
-	log.Printf("[BUNDLE]: %s initialization", o.name)
 	o.initControllers(router)
 }
 
@@ -39,7 +35,7 @@ func (o *Bundle) AddController(controller ControllerInterface) {
 }
 
 func (o *Bundle) BootstrapEvent() {
-	defer log.Printf("[BUNDLE] %s initialized Bootstrap Event", o.name)
+
 }
 
 func (o *Bundle) GetName() string {
