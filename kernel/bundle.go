@@ -19,7 +19,6 @@ func NewBundle(name string) *Bundle {
 		name:        name,
 		controllers: make([]ControllerInterface, 0),
 	}
-	bundle.BootstrapEvent()
 	return bundle
 }
 
@@ -40,7 +39,7 @@ func (o *Bundle) AddController(controller ControllerInterface) {
 }
 
 func (o *Bundle) BootstrapEvent() {
-	defer log.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	defer log.Printf("[BUNDLE] %s initialized Bootstrap Event", o.name)
 }
 
 func (o *Bundle) GetName() string {

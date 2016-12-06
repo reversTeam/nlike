@@ -25,6 +25,7 @@ func (o *Package) Init(router *Router) {
 
 func (o *Package) initBundles(router *Router) {
 	for _, bundle := range o.bundles {
+		bundle.BootstrapEvent()
 		bundle.Init(router)
 	}
 }

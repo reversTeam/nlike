@@ -3,7 +3,6 @@ package topic
 import (
 	"github.com/reversTeam/nlike/kernel"
 	topicController "github.com/reversTeam/nlike/modules/topic/bundles/topic/controller"
-	"log"
 )
 
 type TopicBundle struct {
@@ -20,6 +19,5 @@ func NewBundle() *TopicBundle {
 
 func (o *TopicBundle) BootstrapEvent() {
 	o.Bundle.BootstrapEvent()
-	log.Println("###################################################################")
 	o.AddController(topicController.NewController())
 }
