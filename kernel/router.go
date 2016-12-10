@@ -10,13 +10,6 @@ type Router struct {
 	Routes []*Route
 }
 
-func NewRoute(pattern *regexp.Regexp, handler http.Handler) *Route {
-	return &Route{
-		pattern: pattern,
-		handler: handler,
-	}
-}
-
 func NewRouter() *Router {
 	return &Router{
 		Routes: nil,
