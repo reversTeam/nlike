@@ -3,6 +3,7 @@ package topic
 import (
 	"github.com/reversTeam/nlike/kernel"
 	topicController "github.com/reversTeam/nlike/modules/topic/bundles/topic/controller"
+	topicGrpc "github.com/reversTeam/nlike/modules/topic/bundles/topic/grpc"
 )
 
 type TopicBundle struct {
@@ -19,5 +20,14 @@ func NewBundle() *TopicBundle {
 
 func (o *TopicBundle) BootstrapEvent() {
 	o.Bundle.BootstrapEvent()
+	o.AddControllers()
+	o.AddGrpcs()
+}
+
+func (o *TopicBundle) AddControllers() {
 	o.AddController(topicController.NewController())
+}
+
+func (o *TopicBundle) AddGrpcs() {
+	o.AddGrpc(topicGrpc.NewGrpc())
 }

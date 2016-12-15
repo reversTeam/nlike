@@ -9,6 +9,7 @@ type PackageInterface interface {
 	initBundles(router *Router)
 	AddBundle(bundle BundleInterface)
 	BootstrapEvent()
+	Stop()
 }
 
 type Package struct {
@@ -29,6 +30,12 @@ func (o *Package) BootstrapEvent() {
 
 func (o *Package) Init(router *Router) {
 	o.initBundles(router)
+}
+
+func (o *Package) Stop() {
+	for _, bundle := range o.bundles {
+		bundle.Stop()
+	}
 }
 
 func (o *Package) initBundles(router *Router) {

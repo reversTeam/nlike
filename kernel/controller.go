@@ -11,6 +11,7 @@ type ControllerInterface interface {
 	Init(router *Router)
 	initRoutes(router *Router)
 	GetRoutes() []*Route
+	Stop()
 }
 
 type Controller struct {
@@ -41,6 +42,9 @@ func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http
 
 func (o *Controller) Init(router *Router) {
 	o.initRoutes(router)
+}
+
+func (o *Controller) Stop() {
 }
 
 func (o *Controller) initRoutes(router *Router) {

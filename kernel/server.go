@@ -40,7 +40,9 @@ func (o *Server) Start() {
 
 func (o *Server) Stop() {
 	defer log.Println("Server stop")
-	// Execute action before closing the server
+	for _, pkg := range o.packages {
+		pkg.Stop()
+	}
 }
 
 func (o *Server) AddPackage(pkg PackageInterface) {

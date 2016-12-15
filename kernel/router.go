@@ -34,6 +34,7 @@ func (o *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
 	for _, route := range o.Routes {
 		if route.pattern.MatchString(url) {
+			log.Println("Route matched:", url, route.pattern)
 			route.handler.ServeHTTP(w, r)
 			return
 		} else {

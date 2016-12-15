@@ -41,7 +41,6 @@ func main() {
 	srv := kernel.NewServer(*host, *port)
 	modules.Init(srv)
 	srv.InitPackages()
-
 	srv.Start()
 	defer srv.Stop()
 
