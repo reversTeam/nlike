@@ -10,9 +10,3 @@
  - Unit test (with and without --race)
  - Fonctionnal test (with and without --race)
  - Compilation with (--race, only for dev)
-
-## Dynamic load
-
-Réflection of the dynamic load :
- - Reflection code
- - Embeding GRPC deploy and communicate with an other service
