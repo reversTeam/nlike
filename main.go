@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/reversTeam/nlike/kernel"
-	"github.com/reversTeam/nlike/modules/topic"
+	"github.com/reversTeam/nlike/modules"
 	"log"
 
 	"os"
@@ -39,9 +39,7 @@ func main() {
 	done := configureSignals()
 
 	srv := kernel.NewServer(*host, *port)
-
-	topicPkg := topic.NewPackage()
-	srv.AddPackage(topicPkg)
+	modules.Init(srv)
 	srv.InitPackages()
 
 	srv.Start()
