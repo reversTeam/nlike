@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"github.com/reversTeam/nlike/kernel"
-	pb "github.com/reversTeam/nlike/modules/topic/bundles/topic/proto/go"
 )
 
 type TopicGrpc struct {
