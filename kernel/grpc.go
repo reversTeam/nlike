@@ -11,6 +11,7 @@ type GrpcInterface interface {
 	Init()
 	Start()
 	Stop()
+	InitProtos()
 	serve()
 }
 
@@ -31,6 +32,10 @@ func NewGrpc(host string, port int) *Grpc {
 
 func (o *Grpc) Init() {
 	o.Start()
+}
+
+func (o *Grpc) InitProtos() {
+
 }
 
 func (o *Grpc) Start() {

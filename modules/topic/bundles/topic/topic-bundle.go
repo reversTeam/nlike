@@ -29,5 +29,7 @@ func (o *TopicBundle) AddControllers() {
 }
 
 func (o *TopicBundle) AddGrpcs() {
-	o.AddGrpc(topicGrpc.NewGrpc())
+	grpc := topicGrpc.NewGrpc()
+	grpc.InitProtos()
+	o.AddGrpc(grpc)
 }
