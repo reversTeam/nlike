@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"github.com/reversTeam/nlike/kernel"
+	echoRequest "github.com/reversTeam/nlike/modules/echo/bundles/echo/grpc/request"
 )
 
 type EchoGrpc struct {
@@ -16,6 +17,7 @@ func NewGrpc() *EchoGrpc {
 	return grpc
 }
 
-func (o *EchoGrpc) InitProtos() {
-
+func (o *EchoGrpc) InitRequests() {
+	echoReq := echoRequest.NewRequest()
+	echoReq.InitServices(o.Server)
 }

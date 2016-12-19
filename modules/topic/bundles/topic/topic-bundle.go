@@ -30,6 +30,6 @@ func (o *TopicBundle) AddControllers() {
 
 func (o *TopicBundle) AddGrpcs() {
 	grpc := topicGrpc.NewGrpc()
-	grpc.InitProtos()
+	grpc.InitRequests()
 	o.AddGrpc(grpc)
 }

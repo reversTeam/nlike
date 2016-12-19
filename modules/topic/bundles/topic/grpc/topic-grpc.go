@@ -16,6 +16,6 @@ func NewGrpc() *TopicGrpc {
 	return grpc
 }
 
-func (o *TopicGrpc) InitProtos() {
+func (o *TopicGrpc) InitRequests() {
 
 }
