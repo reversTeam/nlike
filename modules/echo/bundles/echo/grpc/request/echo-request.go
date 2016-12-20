@@ -1,18 +1,20 @@
 package request
 
 import (
-	nlikeGrpc "github.com/reversTeam/nlike/kernel/grpc"
+	"github.com/reversTeam/nlike/kernel"
 	echoProto "github.com/reversTeam/nlike/modules/echo/bundles/echo/proto/build"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
 type EchoRequest struct {
-	nlikeGrpc.Request
+	kernel.grpc.Request
 }
 
 func NewRequest() *EchoRequest {
-	return &EchoRequest{}
+	return &EchoRequest{
+		*kernel.grpc.NewRequest(),
+	}
 }
 
 func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessage) (*echoProto.EchoMessage, error) {
@@ -22,5 +24,5 @@ func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessa
 func (o *EchoRequest) InitServices(s *grpc.Server) {
 	o.Request.InitServices(s)
 	// TODO : Can't register this server because segfault
-	// echoProto.RegisterEchoServiceServer(s, o)
+	echoProto.RegisterEchoServiceServer(s, o)
 }
