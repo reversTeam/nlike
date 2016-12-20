@@ -1,19 +1,19 @@
 package request
 
 import (
-	"github.com/reversTeam/nlike/kernel"
+	nlikeGrpc "github.com/reversTeam/nlike/kernel/grpc"
 	echoProto "github.com/reversTeam/nlike/modules/echo/bundles/echo/proto/build"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
 type EchoRequest struct {
-	kernel.grpc.Request
+	nlikeGrpc.Request
 }
 
 func NewRequest() *EchoRequest {
 	return &EchoRequest{
-		*kernel.grpc.NewRequest(),
+		*nlikeGrpc.NewRequest(),
 	}
 }
 

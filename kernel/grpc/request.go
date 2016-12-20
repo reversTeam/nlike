@@ -12,8 +12,8 @@ type RequestInterface interface {
 type Request struct {
 }
 
-func NewRequest() {
-
+func NewRequest() *Request {
+	return &Request{}
 }
 
 func (o *Request) InitServices(s *ggrpc.Server) {
