@@ -31,10 +31,11 @@ func NewGrpc(host string, port int) *Grpc {
 }
 
 func (o *Grpc) Init() {
+	o.InitRequest()
 	o.Start()
 }
 
-func (o *Grpc) InitInitRequest() {
+func (o *Grpc) InitRequest() {
 	log.Println("[GRPC]: init request")
 }
 

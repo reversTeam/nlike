@@ -12,7 +12,9 @@ type EchoRequest struct {
 }
 
 func NewRequest() *EchoRequest {
-	return &EchoRequest{}
+	return &EchoRequest{
+		*nlikeGrpc.NewRequest("EchoRequest"),
+	}
 }
 
 func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessage) (*echoProto.EchoMessage, error) {
@@ -22,5 +24,5 @@ func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessa
 func (o *EchoRequest) InitServices(s *grpc.Server) {
 	o.Request.InitServices(s)
 	// TODO : Can't register this server because segfault
-	// echoProto.RegisterEchoServiceServer(s, o)
+	echoProto.RegisterEchoServiceServer(s, o)
 }

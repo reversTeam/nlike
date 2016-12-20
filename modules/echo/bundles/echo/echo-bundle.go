@@ -30,6 +30,5 @@ func (o *EchoBundle) AddControllers() {
 
 func (o *EchoBundle) AddGrpcs() {
 	grpc := echoGrpc.NewGrpc()
-	grpc.InitRequests()
 	o.AddGrpc(grpc)
 }
