@@ -13,7 +13,7 @@ type EchoRequest struct {
 
 func NewRequest() *EchoRequest {
 	return &EchoRequest{
-		*nlikeGrpc.NewRequest(),
+		*nlikeGrpc.NewRequest("EchoRequest"),
 	}
 }
 

@@ -10,12 +10,15 @@ type RequestInterface interface {
 }
 
 type Request struct {
+	name string
 }
 
-func NewRequest() *Request {
-	return &Request{}
+func NewRequest(name string) *Request {
+	return &Request{
+		name: name,
+	}
 }
 
 func (o *Request) InitServices(s *ggrpc.Server) {
-	log.Println("[REQUEST] Init Services")
+	log.Printf("[REQUEST:%s] Init Services", o.name)
 }
