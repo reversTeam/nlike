@@ -11,7 +11,7 @@ type EchoController struct {
 
 func NewController() *EchoController {
 	echo := &EchoController{
-		*kernel.NewController(),
+		*kernel.NewController("EchoController"),
 	}
 	echo.AddRoute("^/echos$", echo.List)
 	echo.AddRoute("^/echos/create$", echo.Create)

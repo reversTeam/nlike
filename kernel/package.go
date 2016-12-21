@@ -25,7 +25,7 @@ func NewPackage(name string) *Package {
 }
 
 func (o *Package) BootstrapEvent() {
-	defer log.Printf("[PACKAGE]: %s Bootstraped", o.name)
+	defer log.Printf("[%s]: Bootstrap", o.name)
 }
 
 func (o *Package) Init(router *Router) {
@@ -45,6 +45,6 @@ func (o *Package) initBundles(router *Router) {
 }
 
 func (o *Package) AddBundle(bundle BundleInterface) {
-	defer log.Printf("[PACKAGE]: %s Package add bundle %s", o.name, bundle.GetName())
+	defer log.Printf("[%s]: Add bundle", o.name)
 	o.bundles = append(o.bundles, bundle)
 }

@@ -29,17 +29,17 @@ func NewServer(host string, port int) *Server {
 func (o *Server) Start() {
 	tmp := fmt.Sprintf("%s:%d", o.host, o.port)
 
-	defer log.Println("Server started and listen:", tmp)
+	defer log.Println("[SERVER]: Server started and listen:", tmp)
 	go func() {
 		defer o.Stop()
 		if err := http.ListenAndServe(tmp, o.router); err != nil {
-			log.Panic("Server ERROR[500]:", err)
+			log.Panic("[SERVER]: ERROR - 500:", err)
 		}
 	}()
 }
 
 func (o *Server) Stop() {
-	defer log.Println("Server stop")
+	defer log.Println("[SERVER]: Server stop")
 	for _, pkg := range o.packages {
 		pkg.Stop()
 	}

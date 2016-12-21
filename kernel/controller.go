@@ -15,18 +15,21 @@ type ControllerInterface interface {
 }
 
 type Controller struct {
+	name   string
 	Routes []*Route
 }
 
-func NewController() *Controller {
-	controller := &Controller{}
+func NewController(name string) *Controller {
+	controller := &Controller{
+		name: name,
+	}
 	controller.Routes = make([]*Route, 0)
 
 	return controller
 }
 
 func (o *Controller) AddRoute(pattern string, fn func(http.ResponseWriter, *http.Request)) error {
-	defer log.Printf("[CONTROLLER] add route => %s", pattern)
+	defer log.Printf("[%s]: Added route - %s", o.name, pattern)
 
 	reg, err := regexp.Compile(pattern)
 	if err != nil {

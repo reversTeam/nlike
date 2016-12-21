@@ -16,6 +16,7 @@ type GrpcInterface interface {
 }
 
 type Grpc struct {
+	name     string
 	host     string
 	port     int
 	Server   *grpc.Server
@@ -23,11 +24,21 @@ type Grpc struct {
 	done     chan error
 }
 
-func NewGrpc(host string, port int) *Grpc {
-	return &Grpc{
+func NewGrpc(name string, host string, port int) (o *Grpc) {
+	o = &Grpc{
+		name: name,
 		host: host,
 		port: port,
 	}
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", o.host, o.port))
+	if err != nil {
+		log.Panic(err)
+	}
+	o.done = make(chan error)
+	o.listener = lis
+	o.Server = grpc.NewServer()
+
+	return o
 }
 
 func (o *Grpc) Init() {
@@ -36,23 +47,17 @@ func (o *Grpc) Init() {
 }
 
 func (o *Grpc) InitRequest() {
-	log.Println("[GRPC]: init request")
+	log.Printf("[%s]: Init Request", o.name)
 }
 
 func (o *Grpc) Start() {
-	defer log.Printf("[GRPC]: listen on %s:%d", o.host, o.port)
-	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", o.host, o.port))
-	if err != nil {
-		log.Panic(err)
-	}
-	o.Server = grpc.NewServer()
-	o.listener = lis
-	o.done = make(chan error)
+	defer log.Printf("[%s]: listen on %s:%d", o.name, o.host, o.port)
+
 	go o.serve()
 }
 
 func (o *Grpc) Stop() {
-	defer log.Println("[GRPC]: Server stop")
+	defer log.Printf("[%s]: Server stop", o.name)
 	o.Server.GracefulStop()
 }
 

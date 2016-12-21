@@ -20,5 +20,5 @@ func NewRequest(name string) *Request {
 }
 
 func (o *Request) InitServices(s *ggrpc.Server) {
-	log.Printf("[REQUEST:%s] Init Services", o.name)
+	log.Printf("[%s] Init Services", o.name)
 }

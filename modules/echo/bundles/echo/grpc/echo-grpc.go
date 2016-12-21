@@ -11,7 +11,7 @@ type EchoGrpc struct {
 
 func NewGrpc() *EchoGrpc {
 	grpc := &EchoGrpc{
-		*kernel.NewGrpc("127.0.0.1", 4244),
+		*kernel.NewGrpc("EchoGrpc", "127.0.0.1", 4244),
 	}
 
 	return grpc

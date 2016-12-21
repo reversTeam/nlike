@@ -23,18 +23,18 @@ func configureSignals() (done chan bool) {
 	done = make(chan bool, 1)
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-	defer log.Println("Systeme is ready for catch exit's signals")
+	defer log.Println("[MAIN]: Systeme is ready for catch exit's signals")
 
 	go func() {
 		sig := <-sigs
-		defer log.Println("Signal catch:", sig)
+		defer log.Println("[SYSTEM]: Signal catch:", sig)
 		done <- true
 	}()
 	return
 }
 
 func main() {
-	defer log.Println("End program")
+	defer log.Println("[MAIN]: End program")
 	host, port := getFlags()
 	done := configureSignals()
 
