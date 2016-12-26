@@ -7,6 +7,5 @@ message EchoMessage {
 }
 
 service EchoService {
-  rpc Echo(EchoMessage) returns (EchoMessage) {
-  }
+  rpc Echo(EchoMessage) returns (EchoMessage) {}
 }

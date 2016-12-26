@@ -5,6 +5,7 @@ import (
 	echoProto "github.com/reversTeam/nlike/modules/echo/bundles/echo/proto/build"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"log"
 )
 
 type EchoRequest struct {
@@ -18,11 +19,11 @@ func NewRequest() *EchoRequest {
 }
 
 func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessage) (*echoProto.EchoMessage, error) {
+	log.Println("RECEIVE")
 	return echoMessage, nil
 }
 
 func (o *EchoRequest) InitServices(s *grpc.Server) {
 	o.Request.InitServices(s)
-	// TODO : Can't register this server because segfault
 	echoProto.RegisterEchoServiceServer(s, o)
 }
