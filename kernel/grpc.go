@@ -42,7 +42,6 @@ func NewGrpc(name string, host string, port int) (o *Grpc) {
 }
 
 func (o *Grpc) Init() {
-	o.InitRequest()
 	o.Start()
 }
 

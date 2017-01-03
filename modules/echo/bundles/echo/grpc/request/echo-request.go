@@ -19,7 +19,7 @@ func NewRequest() *EchoRequest {
 }
 
 func (o *EchoRequest) Echo(ctx context.Context, echoMessage *echoProto.EchoMessage) (*echoProto.EchoMessage, error) {
-	log.Println("RECEIVE")
+	log.Printf("RECEIVE: %s", echoMessage)
 	return echoMessage, nil
 }
 

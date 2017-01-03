@@ -60,6 +60,7 @@ func (o *Bundle) initControllers(router *Router) {
 
 func (o *Bundle) initGrpcs() {
 	for _, grpc := range o.grpcs {
+		grpc.InitRequests()
 		grpc.Init()
 	}
 }
