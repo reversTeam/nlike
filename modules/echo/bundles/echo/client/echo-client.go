@@ -12,7 +12,7 @@ type Client struct {
 }
 
 func NewClient() (*Client, error) {
-	conn, err := grpc.Dial("127.0.0.1:4244", grpc.WithInsecure())
+	conn, err := grpc.Dial("163.172.32.48:4244", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
@@ -23,9 +23,9 @@ func NewClient() (*Client, error) {
 func (o *Client) Echo(msg string) {
 	ctx := context.Background()
 	protoMsg := &echoProto.EchoMessage{msg}
-	res, err := o.conn.Echo(ctx, protoMsg)
+	_, err := o.conn.Echo(ctx, protoMsg)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(res.GetValue())
+	//	log.Println(res.GetValue())
 }
