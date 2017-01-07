@@ -12,26 +12,28 @@ const (
 	name = "EchoClientBenchmark"
 )
 
-func getFlags() (log_level *int, nb_concurents *int, nb_requests *int, nb_clients *int) {
+func getFlags() (log_level *int, nb_concurents *int, nb_requests *int, nb_clients *int, message *string) {
 	nb_concurents = flag.Int("concurents", 400, "Number of concourrents")
 	nb_clients = flag.Int("clients", 4, "Number of client connexion")
 	nb_requests = flag.Int("requests", 5000, "Number of requests")
 	log_level = flag.Int("log", 1, "Display log mode")
+	message = flag.String("message", "Hello world", "Message send")
 
 	flag.Parse()
 	return
 }
 
 func main() {
-	log_level, nb_concurents, nb_requests, nb_clients := getFlags()
+	log_level, nb_concurents, nb_requests, nb_clients, message := getFlags()
 	total_requests := *nb_concurents * *nb_requests
 
 	log.Printf("[%s]: Start benchmark", name)
 	defer log.Printf("[%s]: End benchmark", name)
-	log.Printf("[%s]: intiialized with %d level logs", name, *log_level)
-	log.Printf("[%s]: initialized with %d clients connexion", name, *nb_clients)
-	log.Printf("[%s]: initialized with %d concurents", name, *nb_concurents)
-	log.Printf("[%s]: initialized with %d requets", name, *nb_requests)
+	log.Printf("[%s]: intiialized with \"%d\" level logs", name, *log_level)
+	log.Printf("[%s]: initialized with \"%d\" clients connexion", name, *nb_clients)
+	log.Printf("[%s]: initialized with \"%d\" concurents", name, *nb_concurents)
+	log.Printf("[%s]: initialized with \"%d\" requets", name, *nb_requests)
+	log.Printf("[%s]: initialized with \"%s\" message", name, *message)
 	log.Printf("[%s]: start benchmark with %d requets", name, total_requests)
 
 	wg := sync.WaitGroup{}
@@ -51,7 +53,7 @@ func main() {
 		go func(c *client.Client, wg *sync.WaitGroup) {
 			defer wg.Done()
 			for j := 0; j < *nb_requests; j++ {
-				c.Echo("Hello world !")
+				c.Echo(*message)
 			}
 		}(clients[i%*nb_clients], &wg)
 	}
