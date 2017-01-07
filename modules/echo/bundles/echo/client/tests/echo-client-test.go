@@ -12,8 +12,9 @@ const (
 	name = "EchoClientBenchmark"
 )
 
-func getFlags() (log_level *int, nb_concurents *int, nb_requests *int) {
+func getFlags() (log_level *int, nb_concurents *int, nb_requests *int, nb_clients *int) {
 	nb_concurents = flag.Int("concurents", 400, "Number of concourrents")
+	nb_clients = flag.Int("clients", 4, "Number of client connexion")
 	nb_requests = flag.Int("requests", 5000, "Number of requests")
 	log_level = flag.Int("log", 1, "Display log mode")
 
@@ -22,20 +23,26 @@ func getFlags() (log_level *int, nb_concurents *int, nb_requests *int) {
 }
 
 func main() {
-	log_level, nb_concurents, nb_requests := getFlags()
+	log_level, nb_concurents, nb_requests, nb_clients := getFlags()
 	total_requests := *nb_concurents * *nb_requests
 
 	log.Printf("[%s]: Start benchmark", name)
 	defer log.Printf("[%s]: End benchmark", name)
 	log.Printf("[%s]: intiialized with %d level logs", name, *log_level)
+	log.Printf("[%s]: initialized with %d clients connexion", name, *nb_clients)
 	log.Printf("[%s]: initialized with %d concurents", name, *nb_concurents)
 	log.Printf("[%s]: initialized with %d requets", name, *nb_requests)
+	log.Printf("[%s]: start benchmark with %d requets", name, total_requests)
+
 	wg := sync.WaitGroup{}
 
-	c, err := client.NewClient()
-
-	if err != nil {
-		log.Fatal(err)
+	clients := make([]*client.Client, 0)
+	for i := 0; i < *nb_clients; i++ {
+		c, err := client.NewClient()
+		if err != nil {
+			log.Fatal(err)
+		}
+		clients = append(clients, c)
 	}
 
 	start := time.Now()
@@ -46,7 +53,7 @@ func main() {
 			for j := 0; j < *nb_requests; j++ {
 				c.Echo("Hello world !")
 			}
-		}(c, &wg)
+		}(clients[i%*nb_clients], &wg)
 	}
 	wg.Wait()
 	past_time := time.Since(start)
