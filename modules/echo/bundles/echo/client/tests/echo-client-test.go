@@ -12,7 +12,17 @@ const (
 	name = "EchoClientBenchmark"
 )
 
-func getFlags() (log_level *int, nb_concurents *int, nb_requests *int, nb_clients *int, message *string) {
+func getFlags() (
+	log_level *int,
+	host *string,
+	port *int,
+	nb_concurents *int,
+	nb_requests *int,
+	nb_clients *int,
+	message *string,
+) {
+	host = flag.String("host", "127.0.0.1", "Host")
+	port = flag.Int("port", 4244, "Port")
 	nb_concurents = flag.Int("concurents", 400, "Number of concourrents")
 	nb_clients = flag.Int("clients", 4, "Number of client connexion")
 	nb_requests = flag.Int("requests", 5000, "Number of requests")
@@ -24,12 +34,14 @@ func getFlags() (log_level *int, nb_concurents *int, nb_requests *int, nb_client
 }
 
 func main() {
-	log_level, nb_concurents, nb_requests, nb_clients, message := getFlags()
+	log_level, host, port, nb_concurents, nb_requests, nb_clients, message := getFlags()
 	total_requests := *nb_concurents * *nb_requests
 
 	log.Printf("[%s]: Start benchmark", name)
 	defer log.Printf("[%s]: End benchmark", name)
 	log.Printf("[%s]: intiialized with \"%d\" level logs", name, *log_level)
+	log.Printf("[%s]: intiialized with \"%s\" host", name, *host)
+	log.Printf("[%s]: intiialized with \"%d\" port", name, *port)
 	log.Printf("[%s]: initialized with \"%d\" clients connexion", name, *nb_clients)
 	log.Printf("[%s]: initialized with \"%d\" concurents", name, *nb_concurents)
 	log.Printf("[%s]: initialized with \"%d\" requets", name, *nb_requests)
@@ -40,7 +52,7 @@ func main() {
 
 	clients := make([]*client.Client, 0)
 	for i := 0; i < *nb_clients; i++ {
-		c, err := client.NewClient()
+		c, err := client.NewClient(*host, *port)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -60,13 +72,11 @@ func main() {
 	wg.Wait()
 	past_time := time.Since(start)
 	past_time_in_nano := float64(past_time.Nanoseconds())
-	past_time_in_seconds := past_time_in_nano / 1000000000
-	requests_per_second := float64(total_requests) / past_time_in_seconds
-
 	avg_time_per_request := past_time_in_nano / float64(total_requests)
+	requests_per_second := 1000000000 / avg_time_per_request
 
 	log.Printf("[%s]: proceded %d in %s", name, total_requests, past_time)
-	log.Printf("[%s]: result %.3f requests per seconds", name, requests_per_second)
+	log.Printf("[%s]: result %.0f requests per seconds", name, requests_per_second)
 	log.Printf("[%s]: result %.0f avg nanoseconds per request", name, avg_time_per_request)
 
 }

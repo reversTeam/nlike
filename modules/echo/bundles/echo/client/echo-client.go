@@ -1,6 +1,7 @@
 package client
 
 import (
+	"fmt"
 	echoProto "github.com/reversTeam/nlike/modules/echo/bundles/echo/proto/build"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -9,15 +10,22 @@ import (
 
 type Client struct {
 	conn echoProto.EchoServiceClient
+	host string
+	port int
 }
 
-func NewClient() (*Client, error) {
-	conn, err := grpc.Dial("163.172.32.48:4244", grpc.WithInsecure())
+func NewClient(host string, port int) (*Client, error) {
+	tmp := fmt.Sprintf("%s:%d", host, port)
+	conn, err := grpc.Dial(tmp, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
 	}
-	return &Client{echoProto.NewEchoServiceClient(conn)}, nil
+	return &Client{
+		echoProto.NewEchoServiceClient(conn),
+		host,
+		port,
+	}, nil
 }
 
 func (o *Client) Echo(msg string) {
